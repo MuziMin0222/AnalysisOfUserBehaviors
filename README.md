@@ -1,10 +1,10 @@
-##环境的介绍：
-1. spark 2.4.4
-2. scala 2.11.8
-3. hive 3.1.2
-4. mysql 5.7.28
-5. kafka_2.12-2.3.0
-6. jdk 1.8.0_192
+##0、环境的介绍：
+- 1. spark 2.4.4
+- 2. scala 2.11.8
+- 3. hive 3.1.2
+- 4. mysql 5.7.28
+- 5. kafka_2.12-2.3.0
+- 6. jdk 1.8.0_192
 ##1、程序中包的解释
 ####Commons包：公共模块包
 - conf：配置工具类，获取commerce.properties文件中的所有配置信息，
@@ -31,3 +31,8 @@
 
 ##2、数据库设计
 ####commerce数据库
+- 暂定
+####db_UserBehaviors数据库
+- user_visit_action表：存放的是用户行为（点击，搜索，下单，付款四种行为）
+- user_info表：存放的是用户信息
+- product_info表：存放的是产品信息
