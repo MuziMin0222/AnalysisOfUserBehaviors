@@ -1,3 +1,10 @@
+##环境的介绍：
+1. spark 2.4.4
+2. scala 2.11.8
+3. hive 3.1.2
+4. mysql 5.7.28
+5. kafka_2.12-2.3.0
+6. jdk 1.8.0_192
 ##1、程序中包的解释
 ####Commons包：公共模块包
 - conf：配置工具类，获取commerce.properties文件中的所有配置信息，
