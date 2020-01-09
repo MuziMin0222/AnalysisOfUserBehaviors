@@ -10,7 +10,7 @@ object ValidUtils {
    * 校验数据中的指定字段，是否在指定范围内
    * @param data 数据
    * @param dataField 数据字段
-   * @param parameter 参数
+   * @param parameter 参数（过滤条件组成的字符串）
    * @param startParamField 起始参数字段
    * @param endParamField 结束参数字段
    * @return 校验结果
@@ -42,7 +42,7 @@ object ValidUtils {
    * 校验数据中的指定字段，是否有值与参数字段的值相同
    * @param data 数据
    * @param dataField 数据字段
-   * @param parameter 参数
+   * @param parameter 参数（从commerce.properties中获取的过滤条件组成的字符串）
    * @param paramField 参数字段
    * @return 校验结果
    */

@@ -11,6 +11,7 @@ object Constants {
   val JDBC_URL = "jdbc.url"
   val JDBC_USER = "jdbc.user"
   val JDBC_PASSWORD = "jdbc.password"
+  val JDBC_TABLE_SESSIONAGGRSTATRDD = "jdbc.session_aggr_stat_table_name"
 
   val KAFKA_TOPICS = "kafka.topics"
 

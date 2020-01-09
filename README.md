@@ -5,7 +5,10 @@
 - 4. mysql 5.7.28
 - 5. kafka_2.12-2.3.0
 - 6. jdk 1.8.0_192
+- 7. hadoop 2.9.2
+- 8. zookeeper-3.5.5
 ##1、程序中包的解释
+- ....
 ####Commons包：公共模块包
 - conf：配置工具类，获取commerce.properties文件中的所有配置信息，
 使用户可以通过对象的方式访问commerce.properties中的所有配置
@@ -30,9 +33,23 @@
 ####analysis包：数据分析包
 
 ##2、数据库设计
-####commerce数据库
-- 暂定
-####db_UserBehaviors数据库
+####mysql中commerce数据库
+- 用于存储计算结果
+####hive中db_UserBehaviors数据库
 - user_visit_action表：存放的是用户行为（点击，搜索，下单，付款四种行为）
 - user_info表：存放的是用户信息
 - product_info表：存放的是产品信息
+
+##3、注意事项
+- hive数据库元数据总是出
+Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient问题；
+执行hive --service metastore &
+- hive中删除有表的数据库：drop database 数据库名字 cascade;
+
+##4、需求分析
+####需求一：用户访问session统计：各个范围的session步长，访问时长占比统计
+1. 访问时长：session的最早时间和最晚时间只差
+2. 访问步长：session和action的个数
+3. 统计出符合筛选条件的session中，访问时长在
+1s~3s、4s~6s、7s~9s、10s~30s、30s~60s、1m~3m、3m~10m、10m~30m、30m，
+访问步长在1_3、4_6、…以上各个范围内的各种session的占比。

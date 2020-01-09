@@ -101,7 +101,7 @@ object DateUtils {
   /**
    * 解析时间字符串
    * @param time 时间字符串
-   * @return Date
+   * @return Date  yyyy-MM-dd HH:mm:ss
    */
   def parseTime(time:String):Date = {
     TIME_FORMAT.parseDateTime(time).toDate

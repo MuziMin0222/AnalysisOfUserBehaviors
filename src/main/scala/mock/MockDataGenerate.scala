@@ -147,7 +147,7 @@ object MockDataGenerate {
    */
   private def insertHive(spark:SparkSession,tableName:String,DF:DataFrame)={
 //    spark.sql("drop table " + tableName)
-    DF.write.saveAsTable(tableName)
+    DF.write.mode("append").saveAsTable(tableName)
   }
 
   //表的表名
@@ -162,9 +162,9 @@ object MockDataGenerate {
     import spark.implicits._
 
     //模拟数据
-    val userVisitActionData = this.mockUserVisitActionData()
-    val userInfoData = this.mockUserInfo()
-    val productInfo = this.mockProductInfo()
+    val userVisitActionData: Array[UserVisitAction] = this.mockUserVisitActionData()
+    val userInfoData: Array[UserInfo] = this.mockUserInfo()
+    val productInfo: Array[ProductInfo] = this.mockProductInfo()
 
     //将模拟数据封装成RDD
     val userVisitActionRDD = spark.sparkContext.makeRDD(userVisitActionData)
@@ -174,6 +174,7 @@ object MockDataGenerate {
     //创建数据库
 //    spark.sql("create database db_UserBehaviors")
     spark.sql("show databases").show()
+//    spark.sql("select * from db_UserBehaviors.user_info limit 10").show()
 
     //将用户访问数据转换成DF保存到hive中
     val userVisitActionDF = userVisitActionRDD.toDF()
