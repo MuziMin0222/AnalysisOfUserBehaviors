@@ -1,4 +1,4 @@
-package analysis.session
+package analysis.session.accumulator
 
 import org.apache.spark.util.AccumulatorV2
 

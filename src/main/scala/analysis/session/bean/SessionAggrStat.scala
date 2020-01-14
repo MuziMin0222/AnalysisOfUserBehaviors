@@ -1,4 +1,4 @@
-package analysis.session
+package analysis.session.bean
 
 /**
  * 统计结果封装的样例类

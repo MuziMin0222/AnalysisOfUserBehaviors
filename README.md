@@ -47,9 +47,12 @@ Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreCli
 - hive中删除有表的数据库：drop database 数据库名字 cascade;
 
 ##4、需求分析
-####需求一：用户访问session统计：各个范围的session步长，访问时长占比统计
+###大需求一：用户访问Session统计
+####小需求一：用户访问session统计：各个范围的session步长，访问时长占比统计
 1. 访问时长：session的最早时间和最晚时间只差
 2. 访问步长：session和action的个数
 3. 统计出符合筛选条件的session中，访问时长在
 1s~3s、4s~6s、7s~9s、10s~30s、30s~60s、1m~3m、3m~10m、10m~30m、30m，
 访问步长在1_3、4_6、…以上各个范围内的各种session的占比。
+###大需求二：页面单跳转化率统计
+###

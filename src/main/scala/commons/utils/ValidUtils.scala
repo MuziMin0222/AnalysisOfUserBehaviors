@@ -16,11 +16,13 @@ object ValidUtils {
    * @return 校验结果
    */
   def between(data:String, dataField:String, parameter:String, startParamField:String, endParamField:String):Boolean = {
+    var flag = false
 
     val startParamFieldStr = StringUtils.getFieldFromConcatString(parameter, "\\|", startParamField)
     val endParamFieldStr = StringUtils.getFieldFromConcatString(parameter, "\\|", endParamField)
     if(startParamFieldStr == null || endParamFieldStr == null) {
-      return true
+      flag = true
+      return flag
     }
 
     val startParamFieldValue = startParamFieldStr.toInt
@@ -30,12 +32,13 @@ object ValidUtils {
     if(dataFieldStr != null) {
       val dataFieldValue = dataFieldStr.toInt
       if(dataFieldValue >= startParamFieldValue && dataFieldValue <= endParamFieldValue) {
-        return true
+        flag = true
+        return flag
       } else {
-        return false
+        return flag
       }
     }
-    false
+    flag
   }
 
   /**
@@ -47,9 +50,11 @@ object ValidUtils {
    * @return 校验结果
    */
   def in(data:String, dataField:String, parameter:String, paramField:String):Boolean = {
+    var flag = true
+
     val paramFieldValue = StringUtils.getFieldFromConcatString(parameter, "\\|", paramField)
     if(paramFieldValue == null) {
-      return true
+      return flag
     }
     val paramFieldValueSplited = paramFieldValue.split(",")
 
@@ -60,12 +65,12 @@ object ValidUtils {
       for(singleDataFieldValue <- dataFieldValueSplited) {
         for(singleParamFieldValue <- paramFieldValueSplited) {
           if(singleDataFieldValue.compareTo(singleParamFieldValue) ==0) {
-            return true
+            return flag
           }
         }
       }
     }
-    false
+    flag
   }
 
   /**
@@ -77,18 +82,26 @@ object ValidUtils {
    * @return 校验结果
    */
   def equal(data:String, dataField:String, parameter:String, paramField:String):Boolean = {
+    var flag = true
+
     val paramFieldValue = StringUtils.getFieldFromConcatString(parameter, "\\|", paramField)
     if(paramFieldValue == null) {
-      return true
+      flag = true
+      return flag
+    }else {
+      flag = false
     }
 
     val dataFieldValue = StringUtils.getFieldFromConcatString(data, "\\|", dataField)
     if(dataFieldValue != null) {
       if(dataFieldValue.compareTo(paramFieldValue) == 0) {
-        return true
+        flag = true
+        return flag
+      }else{
+        flag = false
       }
     }
-    false
+    flag
   }
 
 }

@@ -1,14 +1,16 @@
-package analysis.session
+package analysis.session.Function
 
 import java.util.Date
 
+import analysis.session.bean.SessionAggrStat
+import analysis.session.{sc, spark}
 import commons.conf.ConfigurationManager
 import commons.constant.Constants
 import commons.model.{UserInfo, UserVisitAction}
-import commons.utils._
+import commons.utils.{DateUtils, NumberUtils, ParamUtils, StringUtils, ValidUtils}
 import net.sf.json.JSONObject
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.SaveMode
+import org.apache.spark.sql.{DataFrame, SaveMode}
 import org.apache.spark.util.AccumulatorV2
 
 import scala.collection.mutable
@@ -29,7 +31,7 @@ object Demand1Function {
     val endDate = ParamUtils.getParam(taskParm, Constants.PARAM_END_DATE)
 
     val sql = "select * from db_userbehaviors.user_visit_action where date >= '" + startDate + "' and date <= '" + endDate + "'"
-    val user_visit_actionDF = spark.sql(sql)
+    val user_visit_actionDF: DataFrame = spark.sql(sql)
 
     import spark.implicits._
     user_visit_actionDF.as[UserVisitAction].rdd
@@ -66,6 +68,7 @@ object Demand1Function {
 
         //遍历session所有的访问行为
         userVisitActions.foreach {
+          //userVisitAction : UserVisitAction(2020-01-07,16,c7f19806dd274ba9a77be2f640a76cd9,4,2020-01-07 7:31:41,null,-1,-1,24,63,null,null,0)
           userVisitAction => {
             if (user_id == -1L) {
               user_id = userVisitAction.user_id
@@ -84,7 +87,7 @@ object Demand1Function {
               }
             }
 
-            //将非空的click_categort_id做字符串拼接处理
+            //将非空的click_category_id做字符串拼接处理
             if (click_category_id != null && click_category_id != -1L) {
               if (!clickCategoryIdsBuffer.toString.contains(click_category_id.toString)) {
                 clickCategoryIdsBuffer.append(click_category_id + ",")
@@ -128,6 +131,7 @@ object Demand1Function {
             Constants.FIELD_STEP_LENGTH + "=" + stepLength + "|" +
             Constants.FIELD_START_TIME + "=" + DateUtils.formatTime(startTime)
 
+        //(user_id,sessionid=session_id|searchKeywords=searchKeyWords|clickCategoryIds=clickCategoryIds|visitLength=visitLength|stepLength=stepLength|startTime=startTime)
         (user_id, partAggrInfo)
       }
     }
@@ -136,9 +140,10 @@ object Demand1Function {
     import spark.implicits._
     val sql = "select * from db_userbehaviors.user_info"
     val user_infoRDD = spark.sql(sql).as[UserInfo].rdd
-    val userid2InfoRDD = user_infoRDD.map(line => {
-      (line.user_id, line)
-    })
+    val userid2InfoRDD = user_infoRDD.map(
+      line => {
+        (line.user_id, line)
+      })
 
     //将session粒度聚合数据，与用户信息进行join操作
     val userid2FullInfoRDD = user_id2PartAggrInfoRDD.join(userid2InfoRDD)
@@ -229,42 +234,45 @@ object Demand1Function {
     //根据筛选参数进行过滤
     val filteredSession_id2AggrInfoRDD = RDD.filter {
       case (session_id, aggrInfo) => {
-        //按照筛选条件过滤：按年龄范围进行过滤
+
         var success = true
-//        if (!ValidUtils.between(aggrInfo, Constants.FIELD_AGE, parameter, Constants.PARAM_START_AGE, Constants.PARAM_END_AGE)) {
-//          success = false
-//        }
-//
-//        //按照职业范围进行过滤（professionals）
-//        if (!ValidUtils.in(aggrInfo, Constants.FIELD_PROFESSIONAL, parameter, Constants.PARAM_PROFESSIONALS)) {
-//          success = false
-//        }
-//
-//        //按男女性别进行过滤
-//        if (!ValidUtils.equal(aggrInfo, Constants.FIELD_SEX, parameter, Constants.PARAM_SEX)) {
-//          success = false
-//        }
-//
-//        //按照搜索词进行过滤，在搜索关键词字符串中与过滤条件中一个搜索条件满足就过滤通过
-//        if (!ValidUtils.in(aggrInfo, Constants.FIELD_SEARCH_KEYWORDS, parameter, Constants.PARAM_KEYWORDS)) {
-//          success = false
-//        }
-//
-//        //按照点击品类id进行过滤
-//        if (!ValidUtils.in(aggrInfo, Constants.FIELD_CLICK_CATEGORY_IDS, parameter, Constants.PARAM_CATEGORY_IDS)) {
-//          success = false
-//        }
+
+        //按照筛选条件过滤：按年龄范围进行过滤
+        if (!ValidUtils.between(aggrInfo, Constants.FIELD_AGE, parameter, Constants.PARAM_START_AGE, Constants.PARAM_END_AGE)) {
+          success = false
+        }
+
+        //按照职业范围进行过滤（professionals）
+        if (!ValidUtils.in(aggrInfo, Constants.FIELD_PROFESSIONAL, parameter, Constants.PARAM_PROFESSIONALS)) {
+          success = false
+        }
+
+        //按男女性别进行过滤
+        if (!ValidUtils.in(aggrInfo, Constants.FIELD_SEX, parameter, Constants.PARAM_SEX)) {
+          success = false
+        }
+
+        //按照搜索词进行过滤，在搜索关键词字符串中与过滤条件中一个搜索条件满足就过滤通过
+        if (!ValidUtils.in(aggrInfo, Constants.FIELD_SEARCH_KEYWORDS, parameter, Constants.PARAM_KEYWORDS)) {
+          success = false
+        }
+
+        //按照点击品类id进行过滤
+        if (!ValidUtils.in(aggrInfo, Constants.FIELD_CLICK_CATEGORY_IDS, parameter, Constants.PARAM_CATEGORY_IDS)) {
+          success = false
+        }
 
         //如果符合任务搜索需求
         if (success) {
           accumulator.add(Constants.SESSION_COUNT)
+
+          //计算session的访问时长和访问步长的范围，并进行相应的累加
+          val visitLength = StringUtils.getFieldFromConcatString(aggrInfo, "\\|", Constants.FIELD_VISIT_LENGTH).toLong
+          val stepLength = StringUtils.getFieldFromConcatString(aggrInfo, "\\|", Constants.FIELD_STEP_LENGTH).toLong
+          this.calculateVisitLength(visitLength, accumulator)
+          this.calculateStepLength(stepLength, accumulator)
         }
 
-        //计算session的访问时长和访问步长的范围，并进行相应的累加
-        val visitLength = StringUtils.getFieldFromConcatString(aggrInfo, "\\|", Constants.FIELD_VISIT_LENGTH).toLong
-        val stepLength = StringUtils.getFieldFromConcatString(aggrInfo, "\\|", Constants.FIELD_STEP_LENGTH).toLong
-        this.calculateVisitLength(visitLength, accumulator)
-        this.calculateStepLength(stepLength, accumulator)
 
         success
       }
@@ -325,8 +333,13 @@ object Demand1Function {
 
   /**
    * 获取通过筛选条件的session的访问明细数据的RDD
+   * 用户表中记录了用户详细的个人信息，包括年龄、职业、城市、性别等，在实际的业务场景中，
+   * 我们可能会在一段时间关注某一个群体的用户的行为，比如在某一段时间关注北京的白领们的购物行为，
+   * 那么我们就可以通过联立用户表，让我们的统计数据中具有用户属性，然后根据用户属性对统计信息进行过滤，
+   * 将不属于我们所关注的用户群体的用户所产生的行为数据过滤掉，这样就可以实现对指定人群的精准分析。
+   *
    * @param session_id2aggrInfoRDD 以session_id为key，基础明细信息为value的RDD
-   * @param session_id2actionRDD  以session_id为key，用户行为对象为value的RDD
+   * @param session_id2actionRDD   以session_id为key，用户行为对象为value的RDD
    * @return
    */
   def getSession_id2detailRDD(
@@ -339,14 +352,15 @@ object Demand1Function {
 
   /**
    * 计算各个session范围的占比，把结果写入到mysql中
+   *
    * @param value
    * @param taskUUID
    */
-  def calculateAndPersisAggrStat(value:mutable.HashMap[String,Int],taskUUID:String) ={
+  def calculateAndPersisAggrStat(value: mutable.HashMap[String, Int], taskUUID: String) = {
     //从累加器中获取值
     val session_count = value(Constants.SESSION_COUNT).toDouble
-    
-    val visit_length_1s_3s = value.getOrElse(Constants.TIME_PERIOD_1s_3s,0)
+
+    val visit_length_1s_3s = value.getOrElse(Constants.TIME_PERIOD_1s_3s, 0)
     val visit_length_4s_6s = value.getOrElse(Constants.TIME_PERIOD_4s_6s, 0)
     val visit_length_7s_9s = value.getOrElse(Constants.TIME_PERIOD_7s_9s, 0)
     val visit_length_10s_30s = value.getOrElse(Constants.TIME_PERIOD_10s_30s, 0)
@@ -362,9 +376,9 @@ object Demand1Function {
     val step_length_10_30 = value.getOrElse(Constants.STEP_PERIOD_10_30, 0)
     val step_length_30_60 = value.getOrElse(Constants.STEP_PERIOD_30_60, 0)
     val step_length_60 = value.getOrElse(Constants.STEP_PERIOD_60, 0)
-    
+
     //计算各个访问时长和访问步长的范围
-    val visit_length_1s_3s_ratio = NumberUtils.formatDouble(visit_length_1s_3s / session_count,2)
+    val visit_length_1s_3s_ratio = NumberUtils.formatDouble(visit_length_1s_3s / session_count, 2)
     val visit_length_4s_6s_ratio = NumberUtils.formatDouble(visit_length_4s_6s / session_count, 2)
     val visit_length_7s_9s_ratio = NumberUtils.formatDouble(visit_length_7s_9s / session_count, 2)
     val visit_length_10s_30s_ratio = NumberUtils.formatDouble(visit_length_10s_30s / session_count, 2)
@@ -407,10 +421,10 @@ object Demand1Function {
       .toDF()
       .write
       .format("jdbc")
-      .option("url",ConfigurationManager.config.getString(Constants.JDBC_URL))
-      .option("dbtable",ConfigurationManager.config.getString(Constants.JDBC_TABLE_SESSIONAGGRSTATRDD))
-      .option("user",ConfigurationManager.config.getString(Constants.JDBC_USER))
-      .option("password",ConfigurationManager.config.getString(Constants.JDBC_PASSWORD))
+      .option("url", ConfigurationManager.config.getString(Constants.JDBC_URL))
+      .option("dbtable", ConfigurationManager.config.getString(Constants.JDBC_TABLE_SESSIONAGGRSTATRDD))
+      .option("user", ConfigurationManager.config.getString(Constants.JDBC_USER))
+      .option("password", ConfigurationManager.config.getString(Constants.JDBC_PASSWORD))
       .mode(SaveMode.Append)
       .save()
   }
