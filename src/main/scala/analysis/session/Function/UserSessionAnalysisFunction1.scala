@@ -1,12 +1,7 @@
 package analysis.session.Function
 
-import java.util.UUID
-
 import analysis.session.accumulator.SessionAggrStatAccumulator
-import analysis.session.sc
-import commons.conf.ConfigurationManager
-import commons.constant.Constants
-import net.sf.json.JSONObject
+import analysis.session._
 
 object UserSessionAnalysisFunction1 {
 
@@ -23,13 +18,6 @@ object UserSessionAnalysisFunction1 {
    * 并将session_idDetailRDD作为结果返回
    */
   def Demand1() = {
-
-    //获取统计任务参数，即过滤参数
-    val jsonStr = ConfigurationManager.config.getString(Constants.TASK_PARAMS)
-    val taskParam = JSONObject.fromObject(jsonStr)
-
-    //任务执行的ID，用户唯一标示运行后的结果，用在MySQL数据库中作为主键使用
-    val taskUUID = UUID.randomUUID().toString
 
     //从db_userbehaviors.user_visit_action读出数据,查询指定日期范围内的行为数据
     //UserVisitAction(2020-01-07,91,1235481e78ec49f986f00651709450b2,8,2020-01-07 1:39:32,太古商场,-1,-1,null,null,null,null,4)
@@ -63,6 +51,11 @@ object UserSessionAnalysisFunction1 {
     //统计各个范围的session占比，并写入到mysql中
     Demand1Function.calculateAndPersisAggrStat(sessionAggrStatAccumulator.value, taskUUID)
 
-    session_idDetailRDD
+    sc.setCheckpointDir("hdfs://bd1:9000/AnalysisUserBehaviors/filterSession_id2AggrInfoRDD")
+    filterSession_id2AggrInfoRDD.checkpoint()
+    sc.setCheckpointDir("hdfs://bd1:9000/AnalysisUserBehaviors/session_idDetailRDD")
+    session_idDetailRDD.checkpoint()
+
+    (filterSession_id2AggrInfoRDD,session_idDetailRDD,SessionId2ActionRDD)
   }
 }
