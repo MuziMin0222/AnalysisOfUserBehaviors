@@ -222,7 +222,5 @@ object UserSessionAnalysisFunction2 {
       .option("password", ConfigurationManager.config.getString(Constants.JDBC_PASSWORD))
       .mode(SaveMode.Overwrite)
       .save()
-
-    sessionDetailRDD
   }
 }
