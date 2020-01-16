@@ -10,6 +10,7 @@ import scala.util.Random
 import analysis.session._
 import analysis.session.bean.{SessionDetail, SessionRandomExtract}
 import commons.conf.ConfigurationManager
+import org.apache.spark.sql.SaveMode
 
 import scala.collection.immutable.StringOps
 
@@ -19,12 +20,11 @@ import scala.collection.immutable.StringOps
  * 在符合过滤条件的session中，按照时间比例随机抽取100个session。当存在若干天的数据时，100个session抽取指标在天之间平均分配，
  * 在一天之中，根据某个小时的session数量在一天中总session数量中的占比决定这个小时抽取多少个session。
  *
- * 明确一共要抽取多少session
- * 一个小时要抽取的session数量 = (这个小时的session数量/这一天的session数量) * 这一天要抽取的session数量
- * 明确每天要抽取多少session
- * 明确每天有多少session
- * 明确每小时有多少session
- * 明确每小时抽取多少session
+ * 明确一共要抽取多少session    100条session
+ * 明确每天要抽取多少session    一共有多少天的数据，从一共取多少条session平均每天进行分配
+ * 明确每天有多少session         进行统计计算
+ * 明确每小时有多少session        按小时进行分
+ * 明确每小时抽取多少session      一个小时要抽取的session数量 = (这个小时的session数量/这一天的session数量) * 这一天要抽取的session数量
  * 根据每小时抽取数量生成随机索引
  * 按照随机索引抽取实际的一个小时中的session
  */
@@ -181,7 +181,7 @@ object UserSessionAnalysisFunction2 {
       .option("dbtable", ConfigurationManager.config.getString(Constants.JDBC_TABLE_SESSIONRANDOMEXTRACT))
       .option("user", ConfigurationManager.config.getString(Constants.JDBC_USER))
       .option("password", ConfigurationManager.config.getString(Constants.JDBC_PASSWORD))
-      .mode("append")
+      .mode(SaveMode.Overwrite)
       .save()
 
     //提取抽取出来的数据中的session_id
@@ -220,7 +220,9 @@ object UserSessionAnalysisFunction2 {
       .option("dbtable", ConfigurationManager.config.getString(Constants.JDBC_TABLE_SESSIONDETAIL))
       .option("user", ConfigurationManager.config.getString(Constants.JDBC_USER))
       .option("password", ConfigurationManager.config.getString(Constants.JDBC_PASSWORD))
-      .mode("append")
+      .mode(SaveMode.Overwrite)
       .save()
+
+    sessionDetailRDD
   }
 }
