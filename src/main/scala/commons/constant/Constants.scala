@@ -16,6 +16,7 @@ object Constants {
   val JDBC_TABLE_SESSIONDETAIL = "jdbc.session_detail_table_name"
   val JDBC_TABLE_TOP10CATEGORY = "jdbc.top10_category_table_name"
   val JDBC_TABLE_TOP10SESSION = "jdbc.top10_session_table_name"
+  val JDBC_TABLE_PAGE_SPLIT_CONVERT_RATE = "jdbc.page_split_convert_rate_table_name"
 
   val KAFKA_TOPICS = "kafka.topics"
 
