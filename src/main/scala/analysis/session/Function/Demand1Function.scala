@@ -2,12 +2,12 @@ package analysis.session.Function
 
 import java.util.Date
 
+import analysis._
 import analysis.session.bean.SessionAggrStat
-import analysis.session.{sc, spark}
 import commons.conf.ConfigurationManager
 import commons.constant.Constants
 import commons.model.{UserInfo, UserVisitAction}
-import commons.utils.{DateUtils, NumberUtils, ParamUtils, StringUtils, ValidUtils}
+import commons.utils._
 import net.sf.json.JSONObject
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.{DataFrame, SaveMode}
@@ -19,7 +19,6 @@ import scala.collection.mutable
  * 需求一中会用到的函数方法
  */
 object Demand1Function {
-
   /**
    * 根据日期获取对象的用户行为数据
    *

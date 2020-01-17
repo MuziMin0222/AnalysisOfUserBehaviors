@@ -1,7 +1,7 @@
 package analysis.session.Function
 
 import analysis.session.accumulator.SessionAggrStatAccumulator
-import analysis.session._
+import analysis._
 
 object UserSessionAnalysisFunction1 {
 

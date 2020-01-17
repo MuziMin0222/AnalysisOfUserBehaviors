@@ -1,10 +1,9 @@
 package analysis.session.Function
 
+import analysis._
 import commons.constant.Constants
-import commons.model.UserVisitAction
 import commons.utils.StringUtils
 import org.apache.spark.rdd.RDD
-import analysis.session._
 import analysis.session.bean.{SessionDetail, Top10Session}
 import commons.conf.ConfigurationManager
 import org.apache.spark.sql.SaveMode

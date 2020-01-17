@@ -1,5 +1,3 @@
-package analysis
-
 import java.util.UUID
 
 import commons.conf.ConfigurationManager
@@ -8,7 +6,7 @@ import net.sf.json.JSONObject
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SparkSession
 
-package object session {
+package object analysis {
   val conf: SparkConf = new SparkConf().setAppName("SessionAnalysis").setMaster("local[*]")
   val spark: SparkSession = SparkSession.builder().config(conf).enableHiveSupport().getOrCreate()
 

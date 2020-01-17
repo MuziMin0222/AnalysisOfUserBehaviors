@@ -1,15 +1,14 @@
 package analysis.session.Function
 
 
+import analysis._
 import analysis.session.bean.Top10Category
-
-import scala.collection.mutable.ArrayBuffer
+import commons.conf.ConfigurationManager
 import commons.constant.Constants
 import commons.utils.StringUtils
-import analysis.session._
-import commons.conf.ConfigurationManager
-import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SaveMode
+
+import scala.collection.mutable.ArrayBuffer
 /**
  * 需求三:top10热门品类统计
  *

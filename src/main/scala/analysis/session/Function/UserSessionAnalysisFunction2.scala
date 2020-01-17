@@ -7,7 +7,7 @@ import org.apache.spark.rdd.RDD
 import scala.collection.mutable
 import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 import scala.util.Random
-import analysis.session._
+import analysis._
 import analysis.session.bean.{SessionDetail, SessionRandomExtract}
 import commons.conf.ConfigurationManager
 import org.apache.spark.sql.SaveMode
