@@ -1,6 +1,6 @@
 package analysis.session
 
-import analysis.session.Function.{UserSessionAnalysisFunction1, UserSessionAnalysisFunction2, UserSessionAnalysisFunction3}
+import analysis.session.Function.{UserSessionAnalysisFunction1, UserSessionAnalysisFunction2, UserSessionAnalysisFunction3, UserSessionAnalysisFunction4}
 
 /**
  * 大需求一：用户访问session统计
@@ -14,6 +14,9 @@ object APP {
     //UserSessionAnalysisFunction2.Demand2()
 
     //小需求三：top10热门品类统计
-    UserSessionAnalysisFunction3.demand3()
+//    UserSessionAnalysisFunction3.demand3()
+
+    //小需求四：
+    UserSessionAnalysisFunction4.deamnd4()
   }
 }

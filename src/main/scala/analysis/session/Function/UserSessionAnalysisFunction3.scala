@@ -144,7 +144,7 @@ object UserSessionAnalysisFunction3 {
       .mode(SaveMode.Overwrite)
       .save()
 
-    top10CategoryList
+    (top10CategoryList,session_id2detailRDD)
 
   }
 

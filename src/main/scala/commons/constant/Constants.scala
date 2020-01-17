@@ -15,6 +15,7 @@ object Constants {
   val JDBC_TABLE_SESSIONRANDOMEXTRACT = "jdbc.session_random_extract_table_name"
   val JDBC_TABLE_SESSIONDETAIL = "jdbc.session_detail_table_name"
   val JDBC_TABLE_TOP10CATEGORY = "jdbc.top10_category_table_name"
+  val JDBC_TABLE_TOP10SESSION = "jdbc.top10_session_table_name"
 
   val KAFKA_TOPICS = "kafka.topics"
 
