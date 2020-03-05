@@ -22,7 +22,7 @@ object AdStatDAO {
     val updateAdStats = ArrayBuffer[AdStat]()
 
     val selectSQL = "select count(*) " +
-      "from ad_stat " +
+      "from commerce.ad_stat " +
       "where date=? " +
       "and province=? " +
       "and city=? " +
@@ -44,7 +44,7 @@ object AdStatDAO {
     }
 
     //对于需要插入的数据，执行批量插入操作
-    val insertSQL = "insert into ad_stat values(?,?,?,?,?)"
+    val insertSQL = "insert into commerce.ad_stat values(?,?,?,?,?)"
 
     val insertParamsList = ArrayBuffer[Array[Any]]()
 
@@ -55,7 +55,7 @@ object AdStatDAO {
     client.executeBatch(insertSQL, insertParamsList.toArray)
 
     //对于需要更新的数据，执行批量更新操作
-    val updateSQL = "update ad_stat set clickCount=? " +
+    val updateSQL = "update commerce.ad_stat set clickCount=? " +
       "where date=? " +
       "and province=? " +
       "and city=? " +

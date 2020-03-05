@@ -12,5 +12,5 @@ package analysis.advertising.bean
 case class AdStat(date: String,
                   province: String,
                   city: String,
-                  adid: String,
+                  adid: Long,
                   clickCount: Long)

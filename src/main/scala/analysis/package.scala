@@ -3,8 +3,8 @@ import java.util.UUID
 import commons.conf.ConfigurationManager
 import commons.constant.Constants
 import net.sf.json.JSONObject
-import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.{SparkConf, SparkContext}
 
 package object analysis {
   val conf: SparkConf = new SparkConf().setAppName("SessionAnalysis").setMaster("local[*]")

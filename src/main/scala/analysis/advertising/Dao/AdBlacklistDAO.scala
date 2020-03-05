@@ -18,7 +18,7 @@ object AdBlacklistDAO {
    */
   def insetBatch(adBlackLists: Array[AdBlacklist]) = {
     //批量插入
-    val sql = "insert into ad_blacklist values(?)"
+    val sql = "insert into commerce.ad_blacklist values(?)"
 
     val paramsList = new ArrayBuffer[Array[Any]]()
 
@@ -48,7 +48,7 @@ object AdBlacklistDAO {
    */
   def findAll() = {
     //将黑名单中的所有数据查询出来
-    val sql = "select * from ad_blacklist"
+    val sql = "select * from commerce.ad_blacklist"
 
     val adBlacklists = new ArrayBuffer[AdBlacklist]()
 

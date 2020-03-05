@@ -7,6 +7,8 @@
 6. jdk 1.8.0_192
 7. hadoop 2.9.2
 8. zookeeper-3.5.5
+9. Ubuntu 18.04
+10. Windows10
 ##1、程序中包的解释
 - ....
 ####Commons包：公共模块包

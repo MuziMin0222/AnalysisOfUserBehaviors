@@ -22,7 +22,7 @@ object AdClickTrendDAO {
     val insertAdClickTrends: ArrayBuffer[AdClickTrend] = ArrayBuffer[AdClickTrend]()
 
     val selectSQL = "select count(*) " +
-      "from ad_click_trend " +
+      "from commerce.ad_click_trend " +
       "where date=? " +
       "and hour=? " +
       "and minute=? " +
@@ -43,7 +43,7 @@ object AdClickTrendDAO {
     }
 
     //执行批量更新操作，此处的update是覆盖
-    val updateSQL = "update ad_click_trend set clickCount=? "+
+    val updateSQL = "update commerce.ad_click_trend set clickCount=? "+
     "where date=? "+
     "and hour=? "+
     "and minute=? " +
@@ -58,7 +58,7 @@ object AdClickTrendDAO {
     client.executeBatch(updateSQL,updateParamsList.toArray)
 
     //执行批量插入操作
-    val insertSQL = "insert into ad_click_trend values(?,?,?,?,?)"
+    val insertSQL = "insert into commerce.ad_click_trend values(?,?,?,?,?)"
 
     val insertParamsList = ArrayBuffer[Array[Any]]()
 

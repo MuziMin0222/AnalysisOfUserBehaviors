@@ -19,6 +19,7 @@ object Constants {
   val JDBC_TABLE_PAGE_SPLIT_CONVERT_RATE = "jdbc.page_split_convert_rate_table_name"
 
   val KAFKA_TOPICS = "kafka.topics"
+  val KAFKA_BROKER_LIST = "kafka.broker.list"
 
   //Spark作业相关的常量
   val SPARK_APP_NAME_SESSION = "UserVisitSessionAnalyzeSpark"

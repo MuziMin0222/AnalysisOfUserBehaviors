@@ -30,7 +30,7 @@ object AdProvinceTop3DAO {
     }
 
     //根据去重后的date和province，进行批量删除操作，先将原来的数据全部删除
-    val deleteSQL = "delete from ad_province_top3 where date=? and province=?"
+    val deleteSQL = "delete from commerce.ad_province_top3 where date=? and province=?"
 
     val deleteParamsList: ArrayBuffer[Array[Any]] = ArrayBuffer[Array[Any]]()
 
@@ -47,7 +47,7 @@ object AdProvinceTop3DAO {
     client.executeBatch(deleteSQL,deleteParamsList.toArray)
 
     //批量插入传入进来的所有数据
-    val insertSQL = "insert into ad_province_top3 values(?,?,?,?)"
+    val insertSQL = "insert into commerce.ad_province_top3 values(?,?,?,?)"
 
     val insertParamsList: ArrayBuffer[Array[Any]] = ArrayBuffer[Array[Any]]()
 
