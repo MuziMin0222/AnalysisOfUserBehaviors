@@ -10,7 +10,6 @@
 9. Ubuntu 18.04
 10. Windows10
 ##1、程序中包的解释
-- ....
 ####Commons包：公共模块包
 - conf：配置工具类，获取commerce.properties文件中的所有配置信息，
 使用户可以通过对象的方式访问commerce.properties中的所有配置
@@ -33,10 +32,32 @@
 - MockRealtimeDataGenerate：实时模拟数据生成，负责生成实时
 模拟数据并写入Kafka中，实时模拟数据为实时广告数据
 ####analysis包：数据分析包
+- session：用户访问session统计  
+  - session访问步长/访问时长占比统计
+  - 按比例随机抽取session
+  - top10热门品类统计
+  - top10热门品类活跃session统计
+- page：页面单跳转化率统计
+- product：区域热门商品统计
+- advertising：广告流量实时统计
+  - 动态黑名单实时统计
+  - 各省各城市广告流量实时统计
+  - 各省热门广告实时统计
+  - 最近一小时广告点击量实时统计
 
 ##2、数据库设计
 ####mysql中commerce数据库
-- 用于存储计算结果
+- session_aggr_stat：保存session访问步长占比统计的结果
+- session_random_extract：保存session随机抽取的结果
+- top10_category：保存Top10热门品类统计的结果
+- top10_session：保存Top10热门品类的Top10活跃Session统计的结果
+- page_split_convert_rate：保存页面单跳转化率统计的结果
+- area_top3_product：保存各区域Top3商品统计的结果
+- ad_user_click_count：维护动态黑名单的表
+- ad_blacklist：黑名单列表
+- ad_stat：各省各城市广告流量实时统计结果
+- ad_province_top3：各省热门广告实时统计结果
+- ad_click_trend：最近一小时广告点击量实时统计结果
 ####hive中db_UserBehaviors数据库
 - user_visit_action表：存放的是用户行为（点击，搜索，下单，付款四种行为）
 - user_info表：存放的是用户信息
@@ -47,14 +68,3 @@
 Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient问题；
 执行hive --service metastore &
 - hive中删除有表的数据库：drop database 数据库名字 cascade;
-
-##4、需求分析
-###大需求一：用户访问Session统计
-####小需求一：用户访问session统计：各个范围的session步长，访问时长占比统计
-1. 访问时长：session的最早时间和最晚时间只差
-2. 访问步长：session和action的个数
-3. 统计出符合筛选条件的session中，访问时长在
-1s~3s、4s~6s、7s~9s、10s~30s、30s~60s、1m~3m、3m~10m、10m~30m、30m，
-访问步长在1_3、4_6、…以上各个范围内的各种session的占比。
-###大需求二：页面单跳转化率统计
-###
