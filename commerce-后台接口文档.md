@@ -42,7 +42,7 @@
         请求方法为GET
     
     7. GET /api/page/split/convert/rate
-        获取page_split_convert
+        获取page_split_convert表中的全部数据
         请求方法为GET
     
     8. GET /api/session/aggr/stat
