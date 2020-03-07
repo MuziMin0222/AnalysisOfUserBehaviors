@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxust.dao.SessionAggrStatMapper">
+    <sql id="Base_Column_List">
+            taskid,
+            session_count,
+            visit_length_1s_3s_ratio,
+            visit_length_4s_6s_ratio,
+            visit_length_7s_9s_ratio,
+            visit_length_10s_30s_ratio,
+            visit_length_30s_60s_ratio,
+            visit_length_1m_3m_ratio,
+            visit_length_3m_10m_ratio,
+            visit_length_10m_30m_ratio,
+            visit_length_30m_ratio,
+            step_length_1_3_ratio,
+            step_length_4_6_ratio,
+            step_length_7_9_ratio,
+            step_length_10_30_ratio,
+            step_length_30_60_ratio,
+            step_length_60_ratio
+    </sql>
+    <resultMap id="BaseResultMap" type="com.jxust.entity.SessionAggrStat">
+    <!--@mbg.generated-->
+    <!--@Table commerce.session_aggr_stat-->
+    <result column="taskid" jdbcType="LONGVARCHAR" property="taskid" />
+    <result column="session_count" jdbcType="BIGINT" property="sessionCount" />
+    <result column="visit_length_1s_3s_ratio" jdbcType="DOUBLE" property="visitLength1s3sRatio" />
+    <result column="visit_length_4s_6s_ratio" jdbcType="DOUBLE" property="visitLength4s6sRatio" />
+    <result column="visit_length_7s_9s_ratio" jdbcType="DOUBLE" property="visitLength7s9sRatio" />
+    <result column="visit_length_10s_30s_ratio" jdbcType="DOUBLE" property="visitLength10s30sRatio" />
+    <result column="visit_length_30s_60s_ratio" jdbcType="DOUBLE" property="visitLength30s60sRatio" />
+    <result column="visit_length_1m_3m_ratio" jdbcType="DOUBLE" property="visitLength1m3mRatio" />
+    <result column="visit_length_3m_10m_ratio" jdbcType="DOUBLE" property="visitLength3m10mRatio" />
+    <result column="visit_length_10m_30m_ratio" jdbcType="DOUBLE" property="visitLength10m30mRatio" />
+    <result column="visit_length_30m_ratio" jdbcType="DOUBLE" property="visitLength30mRatio" />
+    <result column="step_length_1_3_ratio" jdbcType="DOUBLE" property="stepLength13Ratio" />
+    <result column="step_length_4_6_ratio" jdbcType="DOUBLE" property="stepLength46Ratio" />
+    <result column="step_length_7_9_ratio" jdbcType="DOUBLE" property="stepLength79Ratio" />
+    <result column="step_length_10_30_ratio" jdbcType="DOUBLE" property="stepLength1030Ratio" />
+    <result column="step_length_30_60_ratio" jdbcType="DOUBLE" property="stepLength3060Ratio" />
+    <result column="step_length_60_ratio" jdbcType="DOUBLE" property="stepLength60Ratio" />
+  </resultMap>
+  <insert id="insert" parameterType="com.jxust.entity.SessionAggrStat">
+    <!--@mbg.generated-->
+    insert into commerce.session_aggr_stat (taskid, session_count, visit_length_1s_3s_ratio, 
+      visit_length_4s_6s_ratio, visit_length_7s_9s_ratio, 
+      visit_length_10s_30s_ratio, visit_length_30s_60s_ratio, 
+      visit_length_1m_3m_ratio, visit_length_3m_10m_ratio, 
+      visit_length_10m_30m_ratio, visit_length_30m_ratio, 
+      step_length_1_3_ratio, step_length_4_6_ratio, step_length_7_9_ratio, 
+      step_length_10_30_ratio, step_length_30_60_ratio, 
+      step_length_60_ratio)
+    values (#{taskid,jdbcType=LONGVARCHAR}, #{sessionCount,jdbcType=BIGINT}, #{visitLength1s3sRatio,jdbcType=DOUBLE}, 
+      #{visitLength4s6sRatio,jdbcType=DOUBLE}, #{visitLength7s9sRatio,jdbcType=DOUBLE}, 
+      #{visitLength10s30sRatio,jdbcType=DOUBLE}, #{visitLength30s60sRatio,jdbcType=DOUBLE}, 
+      #{visitLength1m3mRatio,jdbcType=DOUBLE}, #{visitLength3m10mRatio,jdbcType=DOUBLE}, 
+      #{visitLength10m30mRatio,jdbcType=DOUBLE}, #{visitLength30mRatio,jdbcType=DOUBLE}, 
+      #{stepLength13Ratio,jdbcType=DOUBLE}, #{stepLength46Ratio,jdbcType=DOUBLE}, #{stepLength79Ratio,jdbcType=DOUBLE}, 
+      #{stepLength1030Ratio,jdbcType=DOUBLE}, #{stepLength3060Ratio,jdbcType=DOUBLE}, 
+      #{stepLength60Ratio,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jxust.entity.SessionAggrStat">
+    <!--@mbg.generated-->
+    insert into commerce.session_aggr_stat
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskid != null">
+        taskid,
+      </if>
+      <if test="sessionCount != null">
+        session_count,
+      </if>
+      <if test="visitLength1s3sRatio != null">
+        visit_length_1s_3s_ratio,
+      </if>
+      <if test="visitLength4s6sRatio != null">
+        visit_length_4s_6s_ratio,
+      </if>
+      <if test="visitLength7s9sRatio != null">
+        visit_length_7s_9s_ratio,
+      </if>
+      <if test="visitLength10s30sRatio != null">
+        visit_length_10s_30s_ratio,
+      </if>
+      <if test="visitLength30s60sRatio != null">
+        visit_length_30s_60s_ratio,
+      </if>
+      <if test="visitLength1m3mRatio != null">
+        visit_length_1m_3m_ratio,
+      </if>
+      <if test="visitLength3m10mRatio != null">
+        visit_length_3m_10m_ratio,
+      </if>
+      <if test="visitLength10m30mRatio != null">
+        visit_length_10m_30m_ratio,
+      </if>
+      <if test="visitLength30mRatio != null">
+        visit_length_30m_ratio,
+      </if>
+      <if test="stepLength13Ratio != null">
+        step_length_1_3_ratio,
+      </if>
+      <if test="stepLength46Ratio != null">
+        step_length_4_6_ratio,
+      </if>
+      <if test="stepLength79Ratio != null">
+        step_length_7_9_ratio,
+      </if>
+      <if test="stepLength1030Ratio != null">
+        step_length_10_30_ratio,
+      </if>
+      <if test="stepLength3060Ratio != null">
+        step_length_30_60_ratio,
+      </if>
+      <if test="stepLength60Ratio != null">
+        step_length_60_ratio,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskid != null">
+        #{taskid,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sessionCount != null">
+        #{sessionCount,jdbcType=BIGINT},
+      </if>
+      <if test="visitLength1s3sRatio != null">
+        #{visitLength1s3sRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="visitLength4s6sRatio != null">
+        #{visitLength4s6sRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="visitLength7s9sRatio != null">
+        #{visitLength7s9sRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="visitLength10s30sRatio != null">
+        #{visitLength10s30sRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="visitLength30s60sRatio != null">
+        #{visitLength30s60sRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="visitLength1m3mRatio != null">
+        #{visitLength1m3mRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="visitLength3m10mRatio != null">
+        #{visitLength3m10mRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="visitLength10m30mRatio != null">
+        #{visitLength10m30mRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="visitLength30mRatio != null">
+        #{visitLength30mRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="stepLength13Ratio != null">
+        #{stepLength13Ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="stepLength46Ratio != null">
+        #{stepLength46Ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="stepLength79Ratio != null">
+        #{stepLength79Ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="stepLength1030Ratio != null">
+        #{stepLength1030Ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="stepLength3060Ratio != null">
+        #{stepLength3060Ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="stepLength60Ratio != null">
+        #{stepLength60Ratio,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated-->
+    insert into commerce.session_aggr_stat
+    (taskid, session_count, visit_length_1s_3s_ratio, visit_length_4s_6s_ratio, visit_length_7s_9s_ratio, 
+      visit_length_10s_30s_ratio, visit_length_30s_60s_ratio, visit_length_1m_3m_ratio, 
+      visit_length_3m_10m_ratio, visit_length_10m_30m_ratio, visit_length_30m_ratio, 
+      step_length_1_3_ratio, step_length_4_6_ratio, step_length_7_9_ratio, step_length_10_30_ratio, 
+      step_length_30_60_ratio, step_length_60_ratio)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.taskid,jdbcType=LONGVARCHAR}, #{item.sessionCount,jdbcType=BIGINT}, #{item.visitLength1s3sRatio,jdbcType=DOUBLE}, 
+        #{item.visitLength4s6sRatio,jdbcType=DOUBLE}, #{item.visitLength7s9sRatio,jdbcType=DOUBLE}, 
+        #{item.visitLength10s30sRatio,jdbcType=DOUBLE}, #{item.visitLength30s60sRatio,jdbcType=DOUBLE}, 
+        #{item.visitLength1m3mRatio,jdbcType=DOUBLE}, #{item.visitLength3m10mRatio,jdbcType=DOUBLE}, 
+        #{item.visitLength10m30mRatio,jdbcType=DOUBLE}, #{item.visitLength30mRatio,jdbcType=DOUBLE}, 
+        #{item.stepLength13Ratio,jdbcType=DOUBLE}, #{item.stepLength46Ratio,jdbcType=DOUBLE}, 
+        #{item.stepLength79Ratio,jdbcType=DOUBLE}, #{item.stepLength1030Ratio,jdbcType=DOUBLE}, 
+        #{item.stepLength3060Ratio,jdbcType=DOUBLE}, #{item.stepLength60Ratio,jdbcType=DOUBLE}
+        )
+    </foreach>
+  </insert>
+
+<!--auto generated by MybatisCodeHelper on 2020-03-07-->
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from commerce.session_aggr_stat
+    </select>
+</mapper>

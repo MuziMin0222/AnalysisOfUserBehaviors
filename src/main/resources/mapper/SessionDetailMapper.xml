@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jxust.dao.SessionDetailMapper">
+    <sql id="Base_Column_List">
+            taskid,
+            userid,
+            sessionid,
+            pageid,
+            actionTime,
+            searchKeyword,
+            clickCategoryId,
+            clickProductId,
+            orderCategoryIds,
+            orderProductIds,
+            payCategoryIds,
+            payProductIds
+    </sql>
+    <resultMap id="BaseResultMap" type="com.jxust.entity.SessionDetail">
+    <!--@mbg.generated-->
+    <!--@Table commerce.session_detail-->
+    <result column="taskid" jdbcType="LONGVARCHAR" property="taskid" />
+    <result column="userid" jdbcType="BIGINT" property="userid" />
+    <result column="sessionid" jdbcType="LONGVARCHAR" property="sessionid" />
+    <result column="pageid" jdbcType="BIGINT" property="pageid" />
+    <result column="actionTime" jdbcType="LONGVARCHAR" property="actiontime" />
+    <result column="searchKeyword" jdbcType="LONGVARCHAR" property="searchkeyword" />
+    <result column="clickCategoryId" jdbcType="BIGINT" property="clickcategoryid" />
+    <result column="clickProductId" jdbcType="BIGINT" property="clickproductid" />
+    <result column="orderCategoryIds" jdbcType="LONGVARCHAR" property="ordercategoryids" />
+    <result column="orderProductIds" jdbcType="LONGVARCHAR" property="orderproductids" />
+    <result column="payCategoryIds" jdbcType="LONGVARCHAR" property="paycategoryids" />
+    <result column="payProductIds" jdbcType="LONGVARCHAR" property="payproductids" />
+  </resultMap>
+  <insert id="insert" parameterType="com.jxust.entity.SessionDetail">
+    <!--@mbg.generated-->
+    insert into commerce.session_detail (taskid, userid, sessionid, 
+      pageid, actionTime, searchKeyword, 
+      clickCategoryId, clickProductId, orderCategoryIds, 
+      orderProductIds, payCategoryIds, 
+      payProductIds)
+    values (#{taskid,jdbcType=LONGVARCHAR}, #{userid,jdbcType=BIGINT}, #{sessionid,jdbcType=LONGVARCHAR}, 
+      #{pageid,jdbcType=BIGINT}, #{actiontime,jdbcType=LONGVARCHAR}, #{searchkeyword,jdbcType=LONGVARCHAR}, 
+      #{clickcategoryid,jdbcType=BIGINT}, #{clickproductid,jdbcType=BIGINT}, #{ordercategoryids,jdbcType=LONGVARCHAR}, 
+      #{orderproductids,jdbcType=LONGVARCHAR}, #{paycategoryids,jdbcType=LONGVARCHAR}, 
+      #{payproductids,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jxust.entity.SessionDetail">
+    <!--@mbg.generated-->
+    insert into commerce.session_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskid != null">
+        taskid,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="sessionid != null">
+        sessionid,
+      </if>
+      <if test="pageid != null">
+        pageid,
+      </if>
+      <if test="actiontime != null">
+        actionTime,
+      </if>
+      <if test="searchkeyword != null">
+        searchKeyword,
+      </if>
+      <if test="clickcategoryid != null">
+        clickCategoryId,
+      </if>
+      <if test="clickproductid != null">
+        clickProductId,
+      </if>
+      <if test="ordercategoryids != null">
+        orderCategoryIds,
+      </if>
+      <if test="orderproductids != null">
+        orderProductIds,
+      </if>
+      <if test="paycategoryids != null">
+        payCategoryIds,
+      </if>
+      <if test="payproductids != null">
+        payProductIds,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskid != null">
+        #{taskid,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="sessionid != null">
+        #{sessionid,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pageid != null">
+        #{pageid,jdbcType=BIGINT},
+      </if>
+      <if test="actiontime != null">
+        #{actiontime,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="searchkeyword != null">
+        #{searchkeyword,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="clickcategoryid != null">
+        #{clickcategoryid,jdbcType=BIGINT},
+      </if>
+      <if test="clickproductid != null">
+        #{clickproductid,jdbcType=BIGINT},
+      </if>
+      <if test="ordercategoryids != null">
+        #{ordercategoryids,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="orderproductids != null">
+        #{orderproductids,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="paycategoryids != null">
+        #{paycategoryids,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="payproductids != null">
+        #{payproductids,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated-->
+    insert into commerce.session_detail
+    (taskid, userid, sessionid, pageid, actionTime, searchKeyword, clickCategoryId, clickProductId, 
+      orderCategoryIds, orderProductIds, payCategoryIds, payProductIds)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.taskid,jdbcType=LONGVARCHAR}, #{item.userid,jdbcType=BIGINT}, #{item.sessionid,jdbcType=LONGVARCHAR}, 
+        #{item.pageid,jdbcType=BIGINT}, #{item.actiontime,jdbcType=LONGVARCHAR}, #{item.searchkeyword,jdbcType=LONGVARCHAR}, 
+        #{item.clickcategoryid,jdbcType=BIGINT}, #{item.clickproductid,jdbcType=BIGINT}, 
+        #{item.ordercategoryids,jdbcType=LONGVARCHAR}, #{item.orderproductids,jdbcType=LONGVARCHAR}, 
+        #{item.paycategoryids,jdbcType=LONGVARCHAR}, #{item.payproductids,jdbcType=LONGVARCHAR}
+        )
+    </foreach>
+  </insert>
+
+<!--auto generated by MybatisCodeHelper on 2020-03-07-->
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from commerce.session_detail
+    </select>
+</mapper>
