@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="CN">
 <head>
     <meta charset="UTF-8">
     <title>getData</title>
@@ -43,11 +43,14 @@
     var names = [];    //类别数组（实际用来盛放X轴坐标值）
     var nums = [];    //销量数组（实际用来盛放Y坐标值）
 
-    $.ajax({
+   /* $.ajax({
         type: "get",
-        async: false,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+        async: false, //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+        dataType:"JSONP",   // 解决跨域请求问题
         url: "http://39.108.234.110:8989/api/ad/black",    //请求发送到TestServlet处
+        contentType: "application/json",
         success: function (result) {
+            console.log(result)
             //请求成功时执行该函数内容，result即为服务器返回的json对象
             if (result) {
                 for (var i = 0; i < result.length; i++) {
@@ -76,7 +79,28 @@
             alert("图表请求数据失败!");
             myChart.hideLoading();
         }
+    });*/
+
+
+    $.ajax({
+        type: 'GET',
+        url:"http://query.yahooapis.com/v1/public/yql",
+        dataType:'jsonp',
+        jsonp:"callback",
+        data: {
+            q: "select * from json where url=\"http://39.108.234.110:8989/api/ad/black\"",
+            format: "json"
+        },
+        success: function(data) {
+            // JSON.stringify(data);
+            var data=data.query.results.json.result.data;
+            console.log(data);
+        },
+        error: function(error) {
+            console.log(error);
+        }
     });
+
 </script>
 
 </body>
