@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>散点图</title>
+    <script src="echarts.js"></script>
+</head>
+<body>
+<div id="main" style="width: 400px;height: 600px"></div>
+<script type="text/javascript">
+    var myCharts = echarts.init(document.getElementById('main'));
+
+    var option = {
+        title: {
+            text: '散点图案例'
+        },
+        xAxis: {},
+        yAxis: {},
+        series: {
+            type: 'scatter',
+            data: [
+                [13,44],
+                [51,51],
+                [51,32],
+                [67,19],
+                [19,33]
+            ]
+        }
+    };
+
+    myCharts.setOption(option)
+</script>
+
+</body>
+</html>

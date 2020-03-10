@@ -1,4 +1,4 @@
-package analysis.Demo
+package demo.Demo
 
 import commons.conf.ConfigurationManager
 import commons.constant.Constants

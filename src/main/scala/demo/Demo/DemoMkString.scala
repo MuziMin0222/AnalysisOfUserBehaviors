@@ -1,4 +1,4 @@
-package analysis.Demo
+package demo.Demo
 
 import scala.collection.mutable
 

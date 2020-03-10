@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LoadData</title>
+    <script src="echarts.js"></script>
+</head>
+<body>
+<div id="main" style="height: 600px;width: 400px"></div>
+<script type="text/javascript">
+    var mycharts = echarts.init(document.getElementById('main'));
+
+    mycharts.setOption({
+        title: {
+            text: '异步数据加载示例'
+        },
+        tooltip: {},
+        legend: {
+            data:['销量']
+        },
+        xAxis: {
+            data: []
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: []
+        }]
+    });
+
+    // 异步加载数据
+    $.get('data.json').done(function (data) {
+        // 填入数据
+        myChart.setOption({
+            xAxis: {
+                data: data.categories
+            },
+            series: [{
+                // 根据名字对应到相应的系列
+                name: '销量',
+                data: data.data
+            }]
+        });
+    });
+</script>
+</body>
+</html>

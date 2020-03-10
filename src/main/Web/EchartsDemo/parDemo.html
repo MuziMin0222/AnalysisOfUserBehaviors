@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>parDemo</title>
+    <script src="echarts.js"></script>
+</head>
+<body>
+    <div id="main" style="width: 600px;height: 400px"></div>
+    <script>
+        //绘制图标  饼状图案例
+        echarts.init(document.getElementById('main')).setOption({
+            series: {
+                type: 'pie',
+                data: [
+                    {name: 'A', value: 1212},
+                    {name: 'B', value: 2323},
+                    {name: 'C', value: 1919}
+                ]
+            }
+        });
+    </script>
+</body>
+</html>
