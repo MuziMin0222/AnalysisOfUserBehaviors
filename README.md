@@ -1,4 +1,4 @@
-##0、环境的介绍：
+## 0、环境的介绍：
 1. spark 2.4.4
 2. scala 2.11.8
 3. hive 3.1.2
@@ -9,8 +9,8 @@
 8. zookeeper-3.5.5
 9. Ubuntu 18.04
 10. Windows10
-##1、程序中包的解释
-####Commons包：公共模块包
+## 1、程序中包的解释
+#### Commons包：公共模块包
 - conf：配置工具类，获取commerce.properties文件中的所有配置信息，
 使用户可以通过对象的方式访问commerce.properties中的所有配置
 - constant：常量接口，包括项目中所需要使用的所有常量
@@ -25,13 +25,13 @@
 3. ParamUtils：参数工具类，负责从JSON对象中提取参数
 4. StringUtils:字符串工具类,负责字符串是否为空判断、字符串截断与补全、从拼接字符串中提取字段、给拼接字符串中字段设置值等工作
 5. ValidUtils:校验工具类,负责校验数据中的指定字段是否在指定范围范围内、校验数据中的指定字段中是否有值与参数字段相同、校验数据中的指定字段是否与参数字段相同等工作
-####mock包：模拟数据产生包
+#### mock包：模拟数据产生包
 - MockDataGenerate：离线模拟数据生成，负责生成离线模拟数据
 并写入Hive表中，模拟数据包括用户行为信息、用户信息、产品数据
 信息等
 - MockRealtimeDataGenerate：实时模拟数据生成，负责生成实时
 模拟数据并写入Kafka中，实时模拟数据为实时广告数据
-####analysis包：数据分析包
+#### analysis包：数据分析包
 - session：用户访问session统计  
   - session访问步长/访问时长占比统计
   - 按比例随机抽取session
@@ -45,8 +45,8 @@
   - 各省热门广告实时统计
   - 最近一小时广告点击量实时统计
 
-##2、数据库设计
-####mysql中commerce数据库
+## 2、数据库设计
+#### mysql中commerce数据库
 - session_aggr_stat：保存session访问步长占比统计的结果
 - session_random_extract：保存session随机抽取的结果
 - top10_category：保存Top10热门品类统计的结果
@@ -58,12 +58,12 @@
 - ad_stat：各省各城市广告流量实时统计结果
 - ad_province_top3：各省热门广告实时统计结果
 - ad_click_trend：最近一小时广告点击量实时统计结果
-####hive中db_UserBehaviors数据库
+#### hive中db_UserBehaviors数据库
 - user_visit_action表：存放的是用户行为（点击，搜索，下单，付款四种行为）
 - user_info表：存放的是用户信息
 - product_info表：存放的是产品信息
 
-##3、注意事项
+## 3、注意事项
 - hive数据库元数据总是出
 Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient问题；
 执行hive --service metastore &
