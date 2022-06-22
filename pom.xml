@@ -96,7 +96,7 @@
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>1.9.3</version>
+            <version>1.9.4</version>
         </dependency>
         <dependency>
             <!--  面向Java应用程序的日期/时间库的替代选择，Joda-Time 令时间和日期值变得易于管理、操作和理解。
