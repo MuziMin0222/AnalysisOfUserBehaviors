@@ -89,7 +89,7 @@
             <!-- 有助于以各种格式读取配置/偏好文件的工具 -->
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-configuration2</artifactId>
-            <version>2.7</version>
+            <version>2.8.0</version>
         </dependency>
         <!-- commons-beanutil中包括大量和JavaBean操作有关的工具方法，使用它能够轻松利用Java反射机制来完毕代码中所须要的功能，
         而不须要具体研究反射的原理和使用 -->
